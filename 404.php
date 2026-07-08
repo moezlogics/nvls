@@ -5,8 +5,8 @@ if (!isset($conn) || !isset($site_settings)) {
 
 http_response_code(404);
 
-$siteName = htmlspecialchars($site_settings['site_name'] ?? 'Portal');
-$custom_meta_title = 'Page Not Found — ' . ($site_settings['site_name'] ?? 'Portal');
+$siteName = htmlspecialchars($site_settings['site_name'] ?? 'Kitab Nagri');
+$custom_meta_title = 'Page Not Found — ' . ($site_settings['site_name'] ?? 'Kitab Nagri');
 $custom_meta_description = 'The page you requested could not be found. Browse novels, categories, or return home.';
 $meta_robots = 'noindex, follow';
 

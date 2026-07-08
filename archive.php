@@ -28,7 +28,7 @@ if ($category_slug != '') {
         $category_id = (int)$catData['id'];
         $page_heading = htmlspecialchars($catData['name']);
         $page_subheading = "Explore all novels under category " . htmlspecialchars($catData['name']);
-        $custom_meta_title = !empty($catData['meta_title']) ? $catData['meta_title'] : $catData['name'] . " - " . ($site_settings['site_name'] ?? 'Portal');
+        $custom_meta_title = !empty($catData['meta_title']) ? $catData['meta_title'] : $catData['name'] . " - " . ($site_settings['site_name'] ?? 'Kitab Nagri');
         $custom_meta_description = !empty($catData['meta_description']) ? $catData['meta_description'] : $page_subheading;
     } else {
         http_response_code(404);
@@ -42,7 +42,7 @@ if ($category_slug != '') {
         $writer_id = (int)$writerData['id'];
         $page_heading = htmlspecialchars($writerData['name']);
         $page_subheading = "Explore all novels written by " . htmlspecialchars($writerData['name']);
-        $custom_meta_title = !empty($writerData['meta_title']) ? $writerData['meta_title'] : $writerData['name'] . " - " . ($site_settings['site_name'] ?? 'Portal');
+        $custom_meta_title = !empty($writerData['meta_title']) ? $writerData['meta_title'] : $writerData['name'] . " - " . ($site_settings['site_name'] ?? 'Kitab Nagri');
         $custom_meta_description = !empty($writerData['meta_description']) ? $writerData['meta_description'] : $page_subheading;
     } else {
         http_response_code(404);
@@ -52,7 +52,7 @@ if ($category_slug != '') {
 } elseif ($search != '') {
     $page_heading = "Search Results";
     $page_subheading = "Showing results matching keyword: \"" . htmlspecialchars($search) . "\"";
-    $custom_meta_title = "Search: " . strip_tags($search) . " - " . ($site_settings['site_name'] ?? 'Portal');
+    $custom_meta_title = "Search: " . strip_tags($search) . " - " . ($site_settings['site_name'] ?? 'Kitab Nagri');
     $custom_meta_description = $page_subheading;
     $meta_robots = 'noindex, follow';
 }

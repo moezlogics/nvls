@@ -75,8 +75,8 @@ CREATE TABLE IF NOT EXISTS posts (
 -- 4. settings table (Platform Settings)
 CREATE TABLE IF NOT EXISTS settings (
     id INT PRIMARY KEY,
-    site_name VARCHAR(100) DEFAULT 'My Web Portal',
-    tagline VARCHAR(255) DEFAULT 'Explore Latest Articles & Stories',
+    site_name VARCHAR(100) DEFAULT 'Kitab Nagri',
+    tagline VARCHAR(255) DEFAULT 'Read Online & Download Urdu Novels',
     site_logo VARCHAR(255) DEFAULT NULL,
     site_favicon VARCHAR(255) DEFAULT NULL,
     contact_email VARCHAR(100) DEFAULT NULL,

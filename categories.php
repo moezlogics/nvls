@@ -4,7 +4,7 @@ include 'db.php';
 
 $scheme = (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') ? 'https' : 'http';
 $site_url_base = rtrim($scheme . '://' . $_SERVER['HTTP_HOST'] . $base_path, '/');
-$custom_meta_title = 'Novel Categories - ' . ($site_settings['site_name'] ?? 'Portal');
+$custom_meta_title = 'Novel Categories - ' . ($site_settings['site_name'] ?? 'Kitab Nagri');
 $custom_meta_description = 'Browse and read novels, stories, and series by category on ' . ($site_settings['site_name'] ?? 'our platform') . '.';
 $canonical_url = $site_url_base . '/categories/';
 

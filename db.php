@@ -55,7 +55,7 @@ if (!is_array($site_settings)) {
         }
     } else {
         $site_settings = [
-            'site_name' => 'Portal',
+            'site_name' => 'Kitab Nagri',
             'seo_description' => '',
             'seo_keywords' => '',
             'permalink_structure' => 'plain',

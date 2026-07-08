@@ -4,7 +4,7 @@ require_once __DIR__ . '/includes/static_page.php';
 
 $scheme = (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') ? 'https' : 'http';
 $site_url_base = rtrim($scheme . '://' . $_SERVER['HTTP_HOST'] . $base_path, '/');
-$siteName = $site_settings['site_name'] ?? 'Portal';
+$siteName = $site_settings['site_name'] ?? 'Kitab Nagri';
 
 $contactTitle = trim($site_settings['contact_page_title'] ?? '') ?: 'Contact Us';
 $contactSubtitle = trim($site_settings['contact_page_subtitle'] ?? '') ?: "Have a question? We'd love to hear from you.";

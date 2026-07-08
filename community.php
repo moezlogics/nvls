@@ -42,7 +42,7 @@ $scheme = (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
 $canonical_url = $scheme . '://' . $_SERVER['HTTP_HOST'] . $base_path . '/community/';
 $meta_robots = 'index, follow';
 $body_class_extra = 'comm-app-page';
-$custom_meta_title = 'Community - ' . ($site_settings['site_name'] ?? 'Portal');
+$custom_meta_title = 'Community - ' . ($site_settings['site_name'] ?? 'Kitab Nagri');
 $custom_meta_description = 'Join ' . ($site_settings['site_name'] ?? 'our') . ' social community. Read and share novels, quotes and stories.';
 $google_client_id = defined('GOOGLE_CLIENT_ID') ? GOOGLE_CLIENT_ID : '';
 

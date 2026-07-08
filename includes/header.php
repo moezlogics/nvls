@@ -7,7 +7,7 @@ if (!isset($conn) || !isset($site_settings)) {
 }
 global $site_settings, $row, $conn, $base_path;
 if (!is_array($site_settings)) {
-    $site_settings = ['site_name' => 'Portal', 'seo_description' => '', 'seo_keywords' => '', 'theme_primary' => '#0f2c5c', 'theme_secondary' => '#1a56db', 'theme_hover' => '#fbbf24'];
+    $site_settings = ['site_name' => 'Kitab Nagri', 'seo_description' => '', 'seo_keywords' => '', 'theme_primary' => '#0f2c5c', 'theme_secondary' => '#1a56db', 'theme_hover' => '#fbbf24'];
 }
 
 $scheme = (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') ? 'https' : 'http';
@@ -36,7 +36,7 @@ $og_image = '';
 if (isset($is_homepage) && $is_homepage) {
     $page_title = !empty($site_settings['homepage_title']) 
         ? htmlspecialchars($site_settings['homepage_title']) 
-        : htmlspecialchars(trim(($site_settings['site_name'] ?? 'Portal') . (!empty($site_settings['tagline']) ? ' - ' . $site_settings['tagline'] : '')));
+        : htmlspecialchars(trim(($site_settings['site_name'] ?? 'Kitab Nagri') . (!empty($site_settings['tagline']) ? ' - ' . $site_settings['tagline'] : '')));
     $meta_desc = !empty($site_settings['homepage_description']) 
         ? htmlspecialchars($site_settings['homepage_description']) 
         : htmlspecialchars($site_settings['seo_description'] ?? '');
@@ -78,7 +78,7 @@ if (isset($is_homepage) && $is_homepage) {
             : ($site_settings['site_logo'] ?? '');
     }
 } else {
-    $page_title = htmlspecialchars($site_settings['site_name'] ?? 'Portal');
+    $page_title = htmlspecialchars($site_settings['site_name'] ?? 'Kitab Nagri');
     $meta_desc = htmlspecialchars($site_settings['seo_description'] ?? '');
     $og_image = !empty($site_settings['homepage_featured_image']) 
         ? $site_settings['homepage_featured_image'] 
@@ -229,7 +229,7 @@ if (empty($_SESSION['admin_logged_in'])) {
             return $siteUrl . '/' . ltrim(preg_replace('/^\.\.\//', '', $path), '/');
         }
     }
-    $_sn = _jse($site_settings['site_name'] ?? 'Portal');
+    $_sn = _jse($site_settings['site_name'] ?? 'Kitab Nagri');
     $_su = rtrim($site_url, '/');
     $_logoUrl = !empty($site_settings['site_logo']) ? _imgUrl($site_settings['site_logo'], $_su) : '';
     ?>

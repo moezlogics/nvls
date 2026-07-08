@@ -9,7 +9,7 @@
 
         <div class="mt-12 border-t border-white/15 pt-6 text-center text-sm text-white/70">
             &copy; <?php echo date('Y'); ?>
-            <?php echo isset($site_settings['site_name']) ? htmlspecialchars($site_settings['site_name']) : 'Portal'; ?>.
+            <?php echo isset($site_settings['site_name']) ? htmlspecialchars($site_settings['site_name']) : 'Kitab Nagri'; ?>.
             All rights reserved.
         </div>
     </div>

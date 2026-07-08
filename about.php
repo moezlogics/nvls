@@ -4,7 +4,7 @@ require_once __DIR__ . '/includes/static_page.php';
 
 $scheme = (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') ? 'https' : 'http';
 $site_url_base = rtrim($scheme . '://' . $_SERVER['HTTP_HOST'] . $base_path, '/');
-$siteName = $site_settings['site_name'] ?? 'Portal';
+$siteName = $site_settings['site_name'] ?? 'Kitab Nagri';
 
 $aboutTitle = trim($site_settings['about_page_title'] ?? '') ?: 'About Us';
 $aboutSubtitle = trim($site_settings['about_page_subtitle'] ?? '') ?: 'Your ultimate source for reading premium novels, stories, and books.';
