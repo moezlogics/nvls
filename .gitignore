@@ -28,7 +28,7 @@ node_modules/
 package-lock.json
 
 # Composer vendor packages (if Composer is integrated in the future)
-vendor/
+# vendor/
 
 # ── Temporary & Scratch Files ────────────────────────────────────────
 # Test scripts and scratchpads
