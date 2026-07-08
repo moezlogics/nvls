@@ -1,0 +1,134 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@font-face{font-family:"Outfit";font-style:normal;font-weight:400;font-display:block;src:url("./fonts/outfit-latin-400-normal.woff2") format("woff2");}
+@font-face{font-family:"Outfit";font-style:normal;font-weight:500;font-display:block;src:url("./fonts/outfit-latin-500-normal.woff2") format("woff2");}
+@font-face{font-family:"Outfit";font-style:normal;font-weight:600;font-display:block;src:url("./fonts/outfit-latin-600-normal.woff2") format("woff2");}
+@font-face{font-family:"Outfit";font-style:normal;font-weight:700;font-display:block;src:url("./fonts/outfit-latin-700-normal.woff2") format("woff2");}
+@font-face{font-family:"Outfit";font-style:normal;font-weight:800;font-display:block;src:url("./fonts/outfit-latin-800-normal.woff2") format("woff2");}
+
+/* Scan all PHP templates for class usage */
+@source "../*.php";
+@source "../includes/**/*.php";
+
+/* ----------------------------------------------------------------
+   Theme tokens
+   The actual hex values are injected at runtime from the admin
+   "Theme" settings as --theme-primary / --theme-secondary / --theme-hover
+   (see includes/header.php). Here we just map them to Tailwind colors
+   so utilities like `bg-brand`, `text-brand`, `hover:bg-accent` work.
+------------------------------------------------------------------- */
+@theme {
+  --color-brand: var(--theme-primary, #0f2c5c);
+  --color-brand-2: var(--theme-secondary, #1a56db);
+  --color-accent: var(--theme-hover, #fbbf24);
+
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Smooth scrolling for in-page anchors (e.g. #comments) */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Make the brand-coloured "prose" links look right inside article content */
+.prose :where(a):not(:where([class~="not-prose"] *)) {
+  color: var(--theme-secondary, #1a56db);
+  font-weight: 600;
+}
+
+/* ================================================================
+   Reusable UI components (referenced by class name in the .php pages)
+   Kept as plain CSS so the markup stays clean and consistent.
+================================================================ */
+
+/* Hover lift for clickable cards */
+.hover-lift { transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.hover-lift:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,.10); border-color: var(--theme-secondary); }
+
+/* Brand button */
+.btn-brand {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  background: var(--theme-primary); color: #fff; font-weight: 700;
+  padding: .7rem 1.4rem; border-radius: 6px; border: 1px solid var(--theme-primary);
+  transition: all .2s ease; text-decoration: none; cursor: pointer;
+}
+.btn-brand:hover { background: var(--theme-hover); border-color: var(--theme-hover); color: var(--theme-primary); transform: translateY(-1px); }
+
+.btn-details {
+  display: inline-block; background: var(--theme-primary); color: #fff;
+  padding: .5rem 1.25rem; border-radius: 6px; font-size: .85rem; font-weight: 700;
+  text-decoration: none; border: 1px solid var(--theme-primary); transition: all .2s ease;
+}
+.btn-details:hover { background: var(--theme-hover); border-color: var(--theme-hover); color: var(--theme-primary); }
+
+/* Category pill */
+.badge-cat {
+  display: inline-block; background: color-mix(in srgb, var(--theme-secondary) 12%, #fff);
+  color: var(--theme-secondary); font-weight: 700; font-size: .72rem;
+  letter-spacing: .4px; text-transform: uppercase; padding: .25rem .7rem; border-radius: 4px;
+}
+
+/* Section heading */
+.sec-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #edf2f7; padding-bottom: 12px; margin-bottom: 24px; }
+.sec-head h2 { font-size: 1.25rem; font-weight: 800; color: var(--theme-primary); margin: 0; display: flex; align-items: center; gap: .5rem; }
+.sec-head a { font-size: .8rem; background: #f7fafc; color: var(--theme-primary); border: 1px solid #e2e8f0; padding: 6px 16px; border-radius: 6px; text-decoration: none; font-weight: 700; transition: all .2s; white-space: nowrap; }
+.sec-head a:hover { background: var(--theme-primary); color: #fff; border-color: var(--theme-primary); }
+
+/* Premium post card */
+.gcard { background: #fff; border: 1px solid #eef2f6; border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: 0 10px 30px rgba(0,0,0,.03); transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.gcard:hover { transform: translateY(-6px); box-shadow: 0 15px 35px rgba(0,0,0,.08); border-color: var(--theme-secondary); }
+.gcard-img { height: 180px; overflow: hidden; position: relative; display: block; }
+.gcard-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+.gcard:hover .gcard-img img { transform: scale(1.05); }
+.gcard-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+.gcard-cat { font-size: .72rem; font-weight: 700; color: var(--theme-secondary); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 8px; }
+.gcard-title { font-size: 1.05rem; font-weight: 800; color: #1a202c; line-height: 1.4; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.gcard-title a { color: inherit; text-decoration: none; transition: color .2s ease; }
+.gcard-title a:hover { color: var(--theme-hover); }
+.dl-badge { display: inline-flex; align-items: center; gap: 6px; background: #f8fafc; color: #475569; border: 1px solid #e2e8f0; border-radius: 4px; font-size: .75rem; font-weight: 700; padding: 6px 14px; margin-bottom: 16px; width: max-content; }
+.dl-badge i { color: #e11d48; }
+.gcard-param-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 16px; flex-grow: 1; }
+.gcard-param-item { display: flex; flex-direction: column; background: #f8fafc; border: 1px solid #f1f5f9; border-radius: 4px; padding: 4px 6px; text-align: center; }
+.gcard-param-label { font-size: .6rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 1px; }
+.gcard-param-value { font-size: .78rem; font-weight: 600; color: #334155; }
+.gcard-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #edf2f7; padding-top: 15px; margin-top: auto; }
+
+/* Social share circle */
+.share-circle { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 6px; background: #f7fafc; color: #718096; border: 1px solid #e2e8f0; font-size: .8rem; transition: all .2s ease; text-decoration: none; }
+.share-circle:hover { background: var(--theme-secondary); color: #fff; border-color: var(--theme-secondary); transform: translateY(-2px); }
+
+/* Hero search panel (homepage) */
+.hero-search-section { position: relative; background-size: cover; background-position: center; overflow: hidden; }
+.hero-glow { position: absolute; top: -50%; left: -20%; width: 140%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,.12) 0%, rgba(255,255,255,0) 60%); pointer-events: none; }
+.search-filter-panel { background: #fff; border-radius: 6px; box-shadow: 0 15px 35px rgba(0,0,0,.12); padding: 20px; position: relative; z-index: 10; border: 1px solid #eef2f6; }
+.filter-group { position: relative; }
+.filter-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--theme-secondary); font-size: 1rem; pointer-events: none; }
+.filter-control { width: 100%; padding-left: 42px; height: 52px; border-radius: 4px; border: 1px solid #e2e8f0; font-size: .9rem; font-weight: 500; color: #4a5568; background-color: #fff; transition: all .2s ease; }
+.filter-control:focus { outline: none; border-color: var(--theme-secondary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-secondary) 18%, transparent); }
+.btn-filter-search { width: 100%; height: 52px; border-radius: 4px; font-weight: 700; font-size: .95rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--theme-primary); color: #fff; border: none; cursor: pointer; transition: all .2s ease; }
+.btn-filter-search:hover { background: var(--theme-hover); color: var(--theme-primary); transform: translateY(-1px); }
+
+/* Book Cover Card Styles */
+.book-cover-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.group:hover .book-cover-wrapper {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+.book-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.group:hover .book-cover-img {
+  transform: scale(1.05);
+}
+

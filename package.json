@@ -1,0 +1,19 @@
+{
+  "name": "portal-site",
+  "version": "1.0.0",
+  "description": "Tailwind CSS build for the general blog portal (PHP + XAMPP)",
+  "private": true,
+  "scripts": {
+    "css": "tailwindcss -i ./src/tailwind.input.css -o ./css/tailwind.css --minify",
+    "watch": "tailwindcss -i ./src/tailwind.input.css -o ./css/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.0",
+    "@tailwindcss/typography": "^0.5.16",
+    "tailwindcss": "^4.1.0"
+  },
+  "dependencies": {
+    "@fontsource/outfit": "^5.2.8",
+    "@fortawesome/fontawesome-free": "^6.7.2"
+  }
+}

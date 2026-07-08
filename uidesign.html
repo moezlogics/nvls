@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Discovery - Bibliophile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed-variant": "#004e5e",
+                      "on-secondary-fixed": "#051f23",
+                      "on-background": "#191c1d",
+                      "on-tertiary-fixed": "#0f1b36",
+                      "secondary": "#4a6267",
+                      "inverse-on-surface": "#eff1f1",
+                      "surface-tint": "#01677c",
+                      "primary-container": "#00677c",
+                      "inverse-surface": "#2e3131",
+                      "on-primary-fixed": "#001f27",
+                      "secondary-fixed-dim": "#b1cbd1",
+                      "on-surface": "#191c1d",
+                      "primary-fixed": "#b2ebff",
+                      "surface-dim": "#d8dada",
+                      "surface-variant": "#e1e3e3",
+                      "on-secondary-fixed-variant": "#334b4f",
+                      "secondary-fixed": "#cde7ed",
+                      "on-tertiary-fixed-variant": "#3b4664",
+                      "outline": "#6f797c",
+                      "primary-fixed-dim": "#86d1e9",
+                      "error": "#ba1a1a",
+                      "surface-container-high": "#e6e8e9",
+                      "error-container": "#ffdad6",
+                      "tertiary-fixed-dim": "#bbc6e9",
+                      "background": "#f8fafa",
+                      "on-secondary-container": "#50686d",
+                      "surface-bright": "#f8fafa",
+                      "tertiary": "#3a4563",
+                      "surface-container-highest": "#e1e3e3",
+                      "outline-variant": "#bec8cc",
+                      "surface-container-low": "#f2f4f4",
+                      "surface-container-lowest": "#ffffff",
+                      "on-error": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "tertiary-container": "#525d7c",
+                      "on-tertiary-container": "#ccd7fb",
+                      "inverse-primary": "#86d1e9",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#eceeee",
+                      "surface": "#f8fafa",
+                      "on-primary-container": "#98e3fb",
+                      "secondary-container": "#cde7ed",
+                      "primary": "#004d5e",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed": "#dae2ff",
+                      "on-surface-variant": "#3f484c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "2.5rem",
+                      "section-padding": "2rem",
+                      "card-gap": "1.5rem",
+                      "gutter": "1rem",
+                      "margin-mobile": "1rem"
+              },
+              "fontFamily": {
+                      "title-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "label-lg": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "title-md": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "title-lg": [
+                              "22px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.5px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-lg": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.1px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0.5px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "title-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0.15px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "57px",
+                              {
+                                      "lineHeight": "64px",
+                                      "letterSpacing": "-0.25px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.25px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FBFDFD; /* surface / background */
+            color: #191c1d; /* on-surface */
+        }
+        
+        .ambient-shadow-level-1 {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+        
+        .ambient-shadow-level-2 {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        * {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Utility for horizontal slider scrollbar hiding */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased flex">
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface/85 backdrop-blur-md border-b border-outline-variant/30">
+<!-- Desktop Brand & Nav -->
+<div class="hidden md:flex items-center gap-8 h-full">
+<a class="font-headline-sm text-headline-sm font-bold text-primary" href="#">Bibliophile</a>
+<nav class="flex items-center gap-6 h-full">
+<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors" href="#">Home</a>
+<a class="font-label-lg text-label-lg text-primary font-bold border-b-2 border-primary h-full flex items-center mt-[2px]" href="#">Discover</a>
+<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors" href="#">My Library</a>
+<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors" href="#">Reading List</a>
+</nav>
+</div>
+<!-- Mobile Nav (Original Structure) -->
+<div class="md:hidden flex items-center justify-between w-full">
+<button class="p-2 rounded-full hover:bg-surface-variant/50 transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<!-- Brand Logo / Title (Center) -->
+<div class="font-title-lg text-title-lg font-semibold text-on-surface">Discovery</div>
+<!-- Trailing Actions (Right) -->
+<div class="flex gap-2 text-on-surface-variant">
+<button class="p-2 rounded-full hover:bg-surface-variant/50 transition-colors scale-95 active:opacity-80">
+<span class="material-symbols-outlined" data-icon="swap_vert">swap_vert</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-variant/50 transition-colors scale-95 active:opacity-80">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Desktop Trailing Actions -->
+<div class="hidden md:flex items-center gap-2 text-on-surface-variant">
+<button class="p-2 rounded-full hover:bg-surface-variant/50 transition-colors scale-95 active:opacity-80">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<div class="w-px h-6 bg-outline-variant/50 mx-1"></div>
+<button class="p-2 rounded-full hover:bg-surface-variant/50 transition-colors scale-95 active:opacity-80">
+<span class="material-symbols-outlined" data-icon="swap_vert">swap_vert</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-variant/50 transition-colors scale-95 active:opacity-80">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+</button>
+<a class="p-2 rounded-full hover:bg-surface-variant/50 transition-colors scale-95 active:opacity-80 flex items-center" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</a>
+</div>
+</header>
+<!-- Content Canvas -->
+<main class="flex-grow pt-20 pb-32 md:pb-16 px-4 md:px-margin-desktop overflow-y-auto w-full max-w-7xl mx-auto">
+<!-- Categories Slider -->
+<div class="w-full mb-8 pt-4">
+<div class="flex overflow-x-auto hide-scrollbar snap-x scroll-smooth pb-2">
+<!-- Category 1 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="Fiction" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAE9N54lZDCazjy5W92L0f3VjrEiV8bSdPKbOnPcTVibOUE63EpSje63QE2CoKzuWZEwoOH5O5eah6A2oLNCZVoJ_XZNmmdpbvbf0m7tOcoFJm0l05bgsU8Y_RFRomBcA4cV3mLDy7g8PZlTtoCsHcjPPrHIQbx4D2lT1TCdBa0fvSbJ8aiTsprnLCGvr7h8pNmUWjOE7xUMM0H5KV0UXW2-GA2DldQdfvMnh8kz3YzjctVkoJUyvFSALcw8LArrbniuhOaCJMSn98"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">Fiction</span>
+</div>
+<!-- Category 2 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="Romance" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiAl8U7M98V7PueYN7j85qszyhZhPTCoY-ycT4rvVIEDzyfX3NeHbMsVu5DNxKZ_QbgaZK774Ft8pEPhgUClTG7OoMQWUp9f7FuzFWWYdnlnDA2NAdmihJ9PObKlJWYfiAyhiD8Y4sCY_M2j4AGUzoQCUle1joOsj11GKLvokDLF-bzy61kNTVLrnyF9u0iaxuYwUoQMdSHBW-KoL2HtkbhhNSnRjThxnJra0eYi9xYOCZxhvu-2rQIQTXnw6rcexa0ajNuPJVzZc"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">Romance</span>
+</div>
+<!-- Category 3 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="Mystery" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFjFY86A7b5VabXGUGsKTX_GAAUsBAu_8_GOA5ZIWk86vQoJtfUHigxke5LPH2qFfTiZes2fdnmiNjvKLMnpuYy6qn-a6ZIUCQVBEtKRgfPznYJLCYS_AqcrSvtvpodcImEtqeG2MwKRIxur0UZm9oC5_L73u6xMisi0rGkCeI8QBUxWRzPVMntVHyJkjDl5hplecItqEpsBCAvZGxcBlDoRJg18IRjLUIHiNCpmfFmR3m5aUybbgEqBvymi5r36cWNy5aQz8pjVo"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">Mystery</span>
+</div>
+<!-- Category 4 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="Fantasy" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbVOGvrrOWlou2QRyWHPKHstZt4Rv3b5jloafW01LuR_isO-Sz7JACYnS4_rBGHqZblR8HmGttH814L2FE04zbLWXjXyeB8TuSHR_eweuYv9vgos-P3IKzZSv82pCTvHHVRHPp8KQb2a2fhPTgPTmVyochXj3SXGhBpDKVGfrn9new1SwTWfDFB9Tg67iH8oLqgj1P_gYE6N-J-3TYNa5VAHHmRHkPv9wJfZvNrO_4KR-IehWnqycvVVq4x3CRJIp3VSDAChdgEk8"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">Fantasy</span>
+</div>
+<!-- Category 5 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="Sci-Fi" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnqux25KscdGMGlp61RBxOSSYeq-n9DtHtCOfM1_BxI3EdfnZ4CuqR8BbkOlKLZB_Ds0ykkDRAnb3w5WdASasN2btTa-SsmDhUH7x9prtusyFe6C9SMyjT3MoPONQB69ox4g2UOUGOwh9A54advA5yb2cfkNifIgnQbEwyaAi0MAq4C7BvuClDlbDAtN-fPLHmV65bGEzvWYPHxm8mxuVa35ph7ThQ8DaD8_J63NgI0xritoPqWTCTH4ave_eMRuTrk2m6oN5ntbA"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">Sci-Fi</span>
+</div>
+<!-- Category 6 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="Thriller" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqtbOlc83T5M1YBtPBw3A2uDMubNi6ixjkW9YFyk5fwy382ewfZH4Skm2QUMlJzrWKolDiZYaFboIUdDHe6f3fCyE-GI0WA2SNaCoWKK8DZrj4cn-wJD1OlSYUb2d_4vEsgN8hzI3m_W_gWAYBPzb4mPisASKStgNbcXLzVpXhZaJ0HNkN7NuHTEfpiVTegM42RPHQE-BEmOpKg7gMXmSTYbyam2La0WYea-y-m9wuQmonVtqwQ3eMJPmgyAoSDA23OooGq1zZpNM"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">Thriller</span>
+</div>
+<!-- Category 7 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="Horror" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIYgC017J8zw_Q-2m2ne94JzpiJ5stuq-EzBABUhdmlu6R_vqBUciLADv61JC6Y8D3azTgIvvLLqZ274GgqA1MChWqWvzlaw5QgsMYMtUSA6ZIh_nacVY10gxrRRTibSZj7UtvRemj9lKX-DVIhBAAZ8HrjKD8PBaWcV_KE49IIkRx7QwUG61vdi_vOo4FzTsoKbxRM3KmCQ4RHKBdf34EFynT9G8nhq9kHb1v4K7EbnSIqpaKZ8q8CN6zvXKG-H5Q0wRaALI8FQA"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">Horror</span>
+</div>
+<!-- Category 8 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="History" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6y2jOWBkL6DHA4c8i17DAQBKzT6YqEsu5QqDN6pCdF3pSlmnxm6L-eFpC-VYzCuC9oflh5t0SnmlA9WzbMFf9PiaBZ89-y9HAfnSRE8llDL3RxFNXr1wJrjnSO3JqFT6FZsEZuGaZYGmgRwFmPmorsdcAJJzxqRBzOlrUChrxHwVMnQb_IDkBA0Vaf3UoLyPvl3nZKKZwLTeXf1IFhwZeRSOYlRuBo5ndW7Eq41-5E_nsFDW23m8OaSB6riN3dAFCTQY7BXwInQs"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">History</span>
+</div>
+<!-- Category 9 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="Biography" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKSARMoYXm4RyPjBOuOV6Yn_FgNOnqyoGIyradADK9JJMDeXtUlM4zbaK7x2fOouvm7zzaEsC-vR1a41H3W4ZSAa0zRccikJyMzLHCtA-r68W1vX6c6UYbTdIqag5HZe3FGz7-q-F4q6uKAwJF3tJrW7WpHjCA9X3rKXr6JYkRQuPGs08w1v6eK1fd0pmk1usGt_pFdupAXG3G82EkqjFNTID7nHaK4WWG-IjaPBo6SxrH6YNBeuYc8_g44WBFHej2ntJbkJfsras"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">Biography</span>
+</div>
+<!-- Category 10 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="Business" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsIqj_6S-Az2bxwIj5M3-JREyUQVmdtzIjXvbPeci6Qwf7D-DppHpWwJH3VjRQZMtf4W4STzgMf0qvWxQyXnd09a6evrglcHUonRoohSPoICTAxdkoQ2oCGhjvSP_1B4CqKIADGtu31IwF3kOMZHZpSw1D8Ost3Pab7VxeJHJLbYGnASM_dVKXzyEyFSYa7Z_LLHwQoN7n7aTj2HEHUYw-MooYl1HZIjowQjEQkcOibLisxLO_lgnyjQ-pwPm1adm27segGSUzYio"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">Business</span>
+</div>
+<!-- Category 11 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="Self-Help" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe0G1fxK6TKdcqjbFxpMIIAAVpoaOw4Jid5HOvtscEQGzwQvDzS1W28Le31ySOGznFkjgcRZOalrdR-VTd0kgemWwXT4q09iahhMDSZjYCSGRenEPSw5DYsNe7FODEw4vGxdva-HQ5dDwwvy46onCLWcf9PjKjkh4MakVc51Q1LW4p7DLTaVeXOv2fcDupgGfJmhr--yVORqKIzCsC-dAVr4MFKOTgDLKiHSediGyc5SfLnYb_HQ0Z1BaouiCXkIIs2KGLaan_yHI"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">Self-Help</span>
+</div>
+<!-- Category 12 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="Cooking" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqbJ61bGLjHLJSWLDpY-g_lX0HlA_MiZVq9CL2d2FOtq76yVgelRT7WzuEhmY4eVOOn5-7mXUpVuOMBzQe4oZ52V_0SOLEHy-1sSSQLIIFVo2mmrljBxj4yX7ziyTvdUSTPAxdN08XryqM8YtzaD5dPJT92CJ1_h4PePgTBrOy57sf3VfH46IPF4SlrWpPcy3QyB9ZyJKU9FtgH0L77NU6bUHF_RUxGVPdLsL3PlKH7EP5MB83oX1_XRPvfDSjVeKtg7QB-mvZ7vs"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">Cooking</span>
+</div>
+<!-- Category 13 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="Travel" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZdoyEWGJICxlTEzBEYyWMRwx8rBhJF30zZkKbQdFi35r_DRioVfKMKknnL8ggd5joIA-ZQt36Sjhgxizqer78nPnSOfoXug9hhjHOH9USfRvKCua667BWow_ts0aVWZk-0yoYo01GTv9MnxbkYzePkGL9cHfZG4VLPtThX42Gbk9B0Qr3F7bOU8Wi7APoHNcagFAF5U6nyAwvLoPW4uqN_vj_BELzlfifnMhRNmHRTm1fDZZl1dBhBJy0poLk5rKh4wIHk1CgVvY"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">Travel</span>
+</div>
+<!-- Category 14 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="Art" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwX4dfRLZ_ZVHPWiYA32dw1Kv8g2DD1gy_TVAWmP9_EI8eg4TIuDmQVtG9WViM4I4uiwvbkaO5dTUYFkyhMGS1xkXIp0ZaTnTp_J0DxDMBn4Nih9Y7PwcaN_lCYcfOumDSwxsylOAICku-1d6X3N2U3vfAD3s5GnrffuXTbAUcnOpqJsRM6HbWM9YrZYzUdI5cUVgzRBGehVvXcIGy9aHM-54kBhOgBgj9yaMP_JI-Ekj16ys4t0MjVv_J4XQBzvD7KzVAp7qnGvU"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">Art</span>
+</div>
+<!-- Category 15 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="Poetry" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPnujsFZPoFhB0w_5JgJj99UAHZPJF8LGzI_o84FiwK2W8WyiqgCI0nisYrbonkMbKHScya4wah8As2Y9q3oxz3b5LRU2hDnnxDCWbIqur0h_Qob51T6_qNWOKc1aWqf909ppNSGwgEvR5_QlEqq5V7h2Z2asCXcJL1NNy79M8u392g-V-CRGls65F7rP4114eu0veiPS0RsOpwRtnG_9XIWm4a_mW0D-UWsj5YuKsv_oYk0J1qkMr3RqrIlacvU2yokiHkO0dt8A"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">Poetry</span>
+</div>
+<!-- Category 16 -->
+<div class="w-[16.666%] md:w-[12.5%] lg:w-[8.333%] flex-shrink-0 flex flex-col items-center gap-1 cursor-pointer snap-start group px-1">
+<div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-primary/80 p-0.5 transition-transform group-hover:scale-105">
+<img alt="Kids" class="w-full h-full rounded-full object-cover bg-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChwkE2o9zCFzLwB_i38S-aJPI5uI0FBMbH_1hdCPHfJ9sy2bNycvmhF2ieO3KMLJNvctQIYApf_clZAsBPbhhz8lSDsIl1DWM_te7SAsm0Y75rKQYTvqAPvbwk-cCw9gXIGEuvUJ_9elcFx2H-qMgrGWEgrLd0Q-RBvom4QwGx5eODbpE_RoM1I638EsYYCICDuCM1XD68vcvU4wgi0duHflWcLfdSitxkfamZdDBaA21AJG0IWL5KKFnqHiB2REjNiyLxXaHr6go"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface text-center truncate w-full">Kids</span>
+</div>
+</div>
+</div>
+<!-- Book Grid -->
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 md:gap-card-gap">
+<!-- Book Card 1 -->
+<div class="flex flex-col group cursor-pointer mb-6">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden ambient-shadow-level-1 group-hover:ambient-shadow-level-2 transition-shadow duration-300 mb-4">
+<img class="w-full h-full object-cover" data-alt="High quality, detailed book cover art for a fantasy novel titled 'The Witcher Season of Storms'. Dark, moody atmosphere featuring a rugged male protagonist with white hair holding a silver sword. Deep teal and black color palette. Modern digital painting style, sharp focus, dramatic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD63qKZKTOTCTTt3r7KlAU-r7VBff4y8pGEaV3y3gpfV4aOYt0tocZBNc25O-cY3zS9NdqKfytwk0TRoHA7e2ceIWgUaWmH2OD-sSs6oAd6JmK-U710YzqSdMgfy3wvWz2bTajUwYkuxjCnfjr7L0_PQmdVpXZ1m46zZwweTYxIM0N9NnYC7xDuhyeGaKNGKy0ytTz3wjNX7-NE2Dkywr0O7tizb1Kx4LI2uYy0ySWHmz725GUtSGvism9YoEa2dspy8Je0dMig0jU"/>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface line-clamp-2">The Witcher: Season of Storms</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Andrzej Sapkowski</p>
+</div>
+<!-- Book Card 2 -->
+<div class="flex flex-col group cursor-pointer mb-6">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden ambient-shadow-level-1 group-hover:ambient-shadow-level-2 transition-shadow duration-300 mb-4">
+<img class="w-full h-full object-cover" data-alt="High quality, detailed book cover art for a historical fiction novel titled 'The Ghost Ship'. Intricate, ornate typography over a stylized, dark blue oceanic background with golden filigree accents. Elegant, sophisticated, classic design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLUGBzSKbaJCvWf3AyzUa-1dF-quAO_Nc4sIPhO31D65bSyn4I-QmbNZ6_iyTm2NwWoeQzNBfBBoN3NbOhgHIXhVrf92_9I5nlAwNjBWBWmBv4xUz9bFS8LRvfV_c7y-lt04lNPssZJ92g0XwD2ToNwn8sgtJXOrG1a90jfiZSbEjIqBXctCUXkcRnFtP3JGRAzEPx41Bs54GA264oAjZ6Mde7eUWowHrXBu9tpRUf0BGeYyUISc3pbNo_rKNXwNHDjLFXqm9zsK0"/>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface line-clamp-2">The Ghost Ship</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Kate Mosse</p>
+</div>
+<!-- Book Card 3 -->
+<div class="flex flex-col group cursor-pointer mb-6">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden ambient-shadow-level-1 group-hover:ambient-shadow-level-2 transition-shadow duration-300 mb-4">
+<img class="w-full h-full object-cover" data-alt="High quality, detailed book cover art for a fantasy novel titled 'Fourth Wing'. Warm, golden and beige tones featuring silhouettes of flying dragons against a stylized sun or circular motif. Bold serif typography, epic atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrpe3Xaha_eY7Ar1gweBNgfebDcIIzWEQFEwOmDbgstUIVFZOXDjaMss9DwQOoKMcxT3wgsaKqrQGj4Tng-4DRF4OxAkbdeEMEGaPIZ5O-y4Bpo72wbF4CnTWFR5U4Lb-GtireYgNXXiMQthKs6ZxkZEoYfvFYD0eiQtB0_Or2YQ-vhpJGCj5MUZmOH4cskH5W39w_YrWkPHn8vrK8gmaJQ7mC_KALSXqAl9ZBXTar4UMlx2jIVsadP868bAVfBfOUuZNgj850Idk"/>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface line-clamp-2">Fourth Wing</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Rebecca Yarros</p>
+</div>
+<!-- Book Card 4 -->
+<div class="flex flex-col group cursor-pointer mb-6">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden ambient-shadow-level-1 group-hover:ambient-shadow-level-2 transition-shadow duration-300 mb-4">
+<img class="w-full h-full object-cover" data-alt="High quality, detailed book cover art for a Stephen King novel. Dark, eerie suburban house at dusk under a twilight sky. Bold, distinctive yellow typography. Spooky, mysterious atmosphere, highly detailed illustration." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcS6X0KL5cXkPnVxnXtJrUUs95uFZhTIKB2fCi4Kt7I22gXflogWi_-tojNrPxEHHZfUcUiPZPKmu1BF8aUoWVWU9wbEqXfQn_52mg5fsTSQtEdIwD42GdOv8qnoFD1L2TTUQnexSTxdcbSSsmnDTmxCBX7WzKcFskZ-3Pj4tBHS7vVn5cvgdCGNuOPwClICdDPL4gzgkSPH-Y12bodZDbg2nAVSozkWJsz01BuoU4ixEAuc-xDj7yIIiaHVWilcn6QfAD5uinfL8"/>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface line-clamp-2">Fairy Tale</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Stephen King</p>
+</div>
+<!-- Book Card 5 -->
+<div class="flex flex-col group cursor-pointer mb-6">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden ambient-shadow-level-1 group-hover:ambient-shadow-level-2 transition-shadow duration-300 mb-4">
+<img class="w-full h-full object-cover" data-alt="Minimalist, modern book cover design. Abstract geometric shapes in soft pastel colors—muted teal, pale yellow, and soft pink. Clean, sans-serif typography. Contemporary literary fiction style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB06MreLDScDmcZ1m04XntZDww2tW0nEhfa0m9EISGkd4k6UDgpApeMRUQEoFEr1vPwXaSee0g2qaO_jl-uuMS7A8WYaHOoIPe8t0OOwNZP9iGkPoP2_MQbOCIZCwHUKwTKLNjgXs2uV8RwsbynQg63_kTlC0kMx4vw-ADrBl2eBfyviPW92lMwMSAyQYXAzMS13wJKnI9mXI4-ucaBwt0Z_Z__MPWKTqU-dEx7ATsYB58PbYLHqMGiP9iMzll040uJbXCP1xP_2bM"/>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface line-clamp-2">The Silent Patient</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Alex Michaelides</p>
+</div>
+<!-- Book Card 6 -->
+<div class="flex flex-col group cursor-pointer mb-6">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden ambient-shadow-level-1 group-hover:ambient-shadow-level-2 transition-shadow duration-300 mb-4">
+<img class="w-full h-full object-cover" data-alt="Science fiction book cover art featuring a sweeping, futuristic cityscape bathed in neon blue and purple light. A lone figure stands looking out over the vista. Cinematic lighting, highly detailed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj21--nBdvqWxNfFqv2EfcFmYXe8bE4nhNCTKPZzKS5tRAHa3zZEyfNsRAVqkswTQBSiv2djMTi7bU9tlnyno7UnB_wPs3sIayojbrjhB1zP6DIms-COCTrPivuQDlThmXglNKGv528JGi9RP0hYWckUzCwgPYs31vJTIZGo32J6lqw_dz0p5b8guhDuFdK6ZOMjZVQF9LgRw8fGQAYCHC3nINR3HBu1xmkVB3WNB9l6SoE-Sq0jKHGuWN8ooJ-Kdthfyeq96gBUc"/>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface line-clamp-2">Dune</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Frank Herbert</p>
+</div>
+<!-- Book Card 7 -->
+<div class="flex flex-col group cursor-pointer mb-6">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden ambient-shadow-level-1 group-hover:ambient-shadow-level-2 transition-shadow duration-300 mb-4">
+<img class="w-full h-full object-cover" data-alt="Classic literature book cover. Elegant, vintage design with a subtle texture. Deep burgundy background with gold foil-like lettering and delicate floral borders. Timeless and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBm-BkHTN0VavgrXnS2oYDhyIqZL5Y2v6IEsxLD_chHxEPEJFhORl2SZHREehXNL30UGikByhtJOwVt8pKXpQHiCL5rG_Rt8mbzagv9y6LEHrHhgfQuQYcI6Sy0VNPUngU9fbDKElrqBDQaZvbJWogOErVaNwqja2Tr3IwG5Qk2-H9N2p1UVM-MzmPrKQmFpcPPpt_nAijjoOyvuXJaZR4OMW2hCPRZRGiaVX7zoKgT1oXG5VL5ESWjMccFdd4Z2LoX-ftD2HyZo9Y"/>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface line-clamp-2">Pride and Prejudice</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Jane Austen</p>
+</div>
+<!-- Book Card 8 -->
+<div class="flex flex-col group cursor-pointer mb-6">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden ambient-shadow-level-1 group-hover:ambient-shadow-level-2 transition-shadow duration-300 mb-4">
+<img class="w-full h-full object-cover" data-alt="Modern thriller book cover. High contrast black and white photography featuring a blurred, silhouetted figure running down a rainy street. Bold, stark red typography. Tense, gripping atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCneCxHDmLnvm7DfCKGcB-dvIxc9KYLLLyUdsExXbnZKgfVGfRcGV7zcHDqLGemwbiQFwjES7dqjjoZA8C6ZKrUF6opshL_4DzA2408G-uZxYgmO2iB3LIs9bck0F2ZXvbd7ndOGgJ807jtPgWz5OVulc5C0aeTzChdZp9iGJDumyCKceVnfklQlW2wGSABaaExDLd-syQb0RBvg6hmpM5v15hMqdcrusqERWOTrqkESBQUEGg8pEegbD07ZEIuHyprhIepLq5DoQQ"/>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface line-clamp-2">Gone Girl</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Gillian Flynn</p>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 pb-safe md:hidden bg-surface/85 backdrop-blur-md">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors scale-90 active:scale-110" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 scale-90 active:scale-110 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="explore" data-weight="fill" style="font-variation-settings: 'FILL' 1;">explore</span>
+<span class="font-label-sm text-label-sm mt-1">Discover</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors scale-90 active:scale-110" href="#">
+<span class="material-symbols-outlined" data-icon="collections_bookmark">collections_bookmark</span>
+<span class="font-label-sm text-label-sm mt-1">My Library</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors scale-90 active:scale-110" href="#">
+<span class="material-symbols-outlined" data-icon="import_contacts">import_contacts</span>
+<span class="font-label-sm text-label-sm mt-1">Reading List</span>
+</a>
+</nav>
+</body></html>
