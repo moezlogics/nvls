@@ -21,8 +21,10 @@ if (isset($_POST['add_product'])) {
     $stock = (int)$_POST['stock'];
     $post_id = !empty($_POST['post_id']) ? (int)$_POST['post_id'] : 'NULL';
     $status = $conn->real_escape_string($_POST['status']);
+    $meta_title = $conn->real_escape_string(trim($_POST['meta_title']));
+    $meta_description = $conn->real_escape_string(trim($_POST['meta_description']));
     
-    // Image Upload
+    // Main Image Upload
     $image = '';
     if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] == 0) {
         $up = media_store_upload($conn, $_FILES['image_file'], __DIR__ . '/../images', 'images');
@@ -30,9 +32,45 @@ if (isset($_POST['add_product'])) {
             $image = $up['path'];
         }
     }
+
+    // Gallery Images Upload
+    $gallery_paths = [];
+    if (isset($_FILES['gallery_files']) && is_array($_FILES['gallery_files']['name'])) {
+        for ($i = 0; $i < count($_FILES['gallery_files']['name']); $i++) {
+            if ($_FILES['gallery_files']['error'][$i] == 0) {
+                $file = [
+                    'name' => $_FILES['gallery_files']['name'][$i],
+                    'type' => $_FILES['gallery_files']['type'][$i],
+                    'tmp_name' => $_FILES['gallery_files']['tmp_name'][$i],
+                    'error' => $_FILES['gallery_files']['error'][$i],
+                    'size' => $_FILES['gallery_files']['size'][$i]
+                ];
+                $up = media_store_upload($conn, $file, __DIR__ . '/../images', 'images');
+                if ($up['ok']) {
+                    $gallery_paths[] = $up['path'];
+                }
+            }
+        }
+    }
+    $gallery_images = !empty($gallery_paths) ? implode(',', $gallery_paths) : '';
+
+    // Video Upload
+    $video_url = '';
+    if (isset($_FILES['video_file']) && $_FILES['video_file']['error'] == 0) {
+        $up = media_store_upload($conn, $_FILES['video_file'], __DIR__ . '/../images', 'images');
+        if ($up['ok']) {
+            $video_url = $up['path'];
+        }
+    }
     
-    $query = "INSERT INTO products (post_id, title, description, price, sale_price, stock, image, status) 
-              VALUES ($post_id, '$title', '$description', $price, $sale_price, $stock, " . ($image ? "'$image'" : "NULL") . ", '$status')";
+    $query = "INSERT INTO products (post_id, title, description, price, sale_price, stock, image, gallery_images, video_url, status, meta_title, meta_description) 
+              VALUES ($post_id, '$title', '$description', $price, $sale_price, $stock, 
+                      " . ($image ? "'$image'" : "NULL") . ", 
+                      " . ($gallery_images ? "'$gallery_images'" : "NULL") . ", 
+                      " . ($video_url ? "'$video_url'" : "NULL") . ", 
+                      '$status', 
+                      " . ($meta_title ? "'$meta_title'" : "NULL") . ", 
+                      " . ($meta_description ? "'$meta_description'" : "NULL") . ")";
               
     if ($conn->query($query)) {
         clear_page_cache();
@@ -53,8 +91,10 @@ if (isset($_POST['edit_product'])) {
     $stock = (int)$_POST['stock'];
     $post_id = !empty($_POST['post_id']) ? (int)$_POST['post_id'] : 'NULL';
     $status = $conn->real_escape_string($_POST['status']);
+    $meta_title = $conn->real_escape_string(trim($_POST['meta_title']));
+    $meta_description = $conn->real_escape_string(trim($_POST['meta_description']));
     
-    // Image Upload
+    // Main Image Upload
     $image_query = "";
     if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] == 0) {
         $up = media_store_upload($conn, $_FILES['image_file'], __DIR__ . '/../images', 'images');
@@ -63,10 +103,48 @@ if (isset($_POST['edit_product'])) {
             $image_query = ", image='$image_path'";
         }
     }
+
+    // Gallery Images Upload
+    $gallery_query = "";
+    $gallery_paths = [];
+    if (isset($_FILES['gallery_files']) && is_array($_FILES['gallery_files']['name']) && $_FILES['gallery_files']['error'][0] == 0) {
+        for ($i = 0; $i < count($_FILES['gallery_files']['name']); $i++) {
+            if ($_FILES['gallery_files']['error'][$i] == 0) {
+                $file = [
+                    'name' => $_FILES['gallery_files']['name'][$i],
+                    'type' => $_FILES['gallery_files']['type'][$i],
+                    'tmp_name' => $_FILES['gallery_files']['tmp_name'][$i],
+                    'error' => $_FILES['gallery_files']['error'][$i],
+                    'size' => $_FILES['gallery_files']['size'][$i]
+                ];
+                $up = media_store_upload($conn, $file, __DIR__ . '/../images', 'images');
+                if ($up['ok']) {
+                    $gallery_paths[] = $up['path'];
+                }
+            }
+        }
+        if (!empty($gallery_paths)) {
+            $gallery_images = $conn->real_escape_string(implode(',', $gallery_paths));
+            $gallery_query = ", gallery_images='$gallery_images'";
+        }
+    }
+
+    // Video Upload
+    $video_query = "";
+    if (isset($_FILES['video_file']) && $_FILES['video_file']['error'] == 0) {
+        $up = media_store_upload($conn, $_FILES['video_file'], __DIR__ . '/../images', 'images');
+        if ($up['ok']) {
+            $video_path = $conn->real_escape_string($up['path']);
+            $video_query = ", video_url='$video_path'";
+        }
+    }
     
     $query = "UPDATE products SET 
               post_id=$post_id, title='$title', description='$description', price=$price, 
-              sale_price=$sale_price, stock=$stock, status='$status' $image_query 
+              sale_price=$sale_price, stock=$stock, status='$status', 
+              meta_title=" . ($meta_title ? "'$meta_title'" : "NULL") . ", 
+              meta_description=" . ($meta_description ? "'$meta_description'" : "NULL") . "
+              $image_query $gallery_query $video_query 
               WHERE id=$id";
               
     if ($conn->query($query)) {
@@ -187,11 +265,34 @@ if ($n_res) {
                             </select>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">SEO Meta Title (Optional)</label>
+                            <input type="text" name="meta_title" id="productMetaTitle" class="form-control bg-secondary text-white border-0" placeholder="Meta title for Google search results">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">SEO Meta Description (Optional)</label>
+                            <textarea name="meta_description" id="productMetaDescription" class="form-control bg-secondary text-white border-0" rows="1" placeholder="Meta description for Google search results"></textarea>
+                        </div>
+                    </div>
                     
-                    <div class="mb-3">
-                        <label class="form-label">Cover Image File</label>
-                        <input type="file" name="image_file" class="form-control bg-secondary text-white border-0" accept="image/*">
-                        <small class="text-muted">If left blank, it can fallback to linked novel's image.</small>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Cover Image File</label>
+                            <input type="file" name="image_file" class="form-control bg-secondary text-white border-0" accept="image/*">
+                            <small class="text-muted">If blank, it falls back to linked novel image.</small>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Gallery Images (Multiple)</label>
+                            <input type="file" name="gallery_files[]" class="form-control bg-secondary text-white border-0" accept="image/*" multiple>
+                            <small class="text-muted">Upload secondary slides for the product page.</small>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Product Video File</label>
+                            <input type="file" name="video_file" class="form-control bg-secondary text-white border-0" accept="video/*">
+                            <small class="text-muted">Upload product trailer video / story.</small>
+                        </div>
                     </div>
                     
                     <div class="d-flex gap-2">
@@ -217,6 +318,7 @@ if ($n_res) {
                                 <th>Sale Price</th>
                                 <th>Stock</th>
                                 <th>Status</th>
+                                <th>Media</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -224,6 +326,8 @@ if ($n_res) {
                             <?php if ($productsQuery && $productsQuery->num_rows > 0): ?>
                                 <?php while ($p = $productsQuery->fetch_assoc()): 
                                     $img = !empty($p['image']) ? '../' . $p['image'] : 'https://placehold.co/100x150/004d5e/fff?text=Novel';
+                                    $gallery_count = !empty($p['gallery_images']) ? count(explode(',', $p['gallery_images'])) : 0;
+                                    $has_video = !empty($p['video_url']);
                                 ?>
                                     <tr>
                                         <td><img src="<?php echo htmlspecialchars($img); ?>" class="product-img" alt=""></td>
@@ -240,6 +344,12 @@ if ($n_res) {
                                             <?php endif; ?>
                                         </td>
                                         <td>
+                                            <small class="text-muted d-block">Slides: <?php echo $gallery_count; ?></small>
+                                            <?php if ($has_video): ?>
+                                                <span class="badge bg-primary text-xs"><i class="fa-solid fa-video me-1"></i> Video</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td>
                                             <button class="btn btn-primary btn-sm me-1" onclick='editProduct(<?php echo json_encode($p); ?>)'><i class="fa-solid fa-pen-to-square"></i></button>
                                             <a href="products.php?delete=<?php echo $p['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this product?')"><i class="fa-solid fa-trash-can"></i></a>
                                         </td>
@@ -247,7 +357,7 @@ if ($n_res) {
                                 <?php endwhile; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="8" class="text-center py-4 text-muted">No products configured yet. Click Add Product to start.</td>
+                                    <td colspan="9" class="text-center py-4 text-muted">No products configured yet. Click Add Product to start.</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>
@@ -290,6 +400,8 @@ if ($n_res) {
         $('#productSalePrice').val(product.sale_price || '');
         $('#productStock').val(product.stock);
         $('#productStatus').val(product.status);
+        $('#productMetaTitle').val(product.meta_title || '');
+        $('#productMetaDescription').val(product.meta_description || '');
     }
     </script>
 </body>

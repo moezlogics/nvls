@@ -155,6 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $custom_page_title = "Checkout - Bookstore";
 $custom_page_description = "Complete your order and select Cash on Delivery shipping.";
+$meta_robots = 'noindex, nofollow';
 
 include_once __DIR__ . '/../includes/header.php';
 ?>

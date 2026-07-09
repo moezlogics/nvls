@@ -702,6 +702,14 @@ $featImg  = !empty($row['image']) ? $site_url . '/' . htmlspecialchars($row['ima
           <a href="#comments" onclick="document.getElementById('comments').scrollIntoView({behavior:'smooth'}); return false;" style="text-decoration:none; color:inherit; transition:color 0.15s;" onmouseover="this.style.color='var(--theme-secondary)'" onmouseout="this.style.color='inherit'"><?php echo $commentsCount; ?> Comments</a>
         </span>
       </div>
+
+      <?php if ($shopProduct && (empty($site_settings['shop_coming_soon']) || coming_soon_has_preview_access('shop'))): ?>
+      <div style="margin-top: 10px; display: flex;">
+        <a href="<?php echo $site_url; ?>/shop/product.php?id=<?php echo $shopProduct['id']; ?>" class="sp-btn" style="background:#10b981; color:#fff; border:none; text-decoration:none; max-width:130px; padding: 8px 12px; font-size: 0.8rem; border-radius: 6px; flex:none;">
+          <i class="fa-solid fa-shopping-cart"></i> Buy Now
+        </a>
+      </div>
+      <?php endif; ?>
     </div>
   </div>
 
@@ -741,14 +749,6 @@ $featImg  = !empty($row['image']) ? $site_url . '/' . htmlspecialchars($row['ima
           <i class="fa-solid fa-file-arrow-down"></i> Download
         </a>
     <?php endif; ?>
-    <?php endif; ?>
-
-    <?php if ($shopProduct && (empty($site_settings['shop_coming_soon']) || coming_soon_has_preview_access('shop'))): 
-        $sp_price = ($shopProduct['sale_price'] !== null) ? $shopProduct['sale_price'] : $shopProduct['price'];
-    ?>
-    <a href="<?php echo $site_url; ?>/shop/product.php?id=<?php echo $shopProduct['id']; ?>" class="sp-btn" style="background:#10b981; color:#fff; border:none; text-decoration:none;">
-      <i class="fa-solid fa-shopping-cart"></i> Buy Printed Book (Rs. <?php echo number_format($sp_price, 0); ?>)
-    </a>
     <?php endif; ?>
   </div>
   <?php endif; ?>

@@ -52,6 +52,7 @@ $grand_total = $subtotal + $shipping;
 
 $custom_page_title = "Shopping Cart - Bookstore";
 $custom_page_description = "Review items in your shopping cart before checking out.";
+$meta_robots = 'noindex, nofollow';
 
 include_once __DIR__ . '/../includes/header.php';
 ?>
@@ -76,11 +77,6 @@ include_once __DIR__ . '/../includes/header.php';
                                 <a href="product.php?id=<?php echo $item['id']; ?>" class="cart-item-title">
                                     <?php echo htmlspecialchars($item['title']); ?>
                                 </a>
-                                <?php if (!empty($item['writer_name'])): ?>
-                                    <div style="font-size:0.75rem; color:var(--shop-gray); margin-bottom:4px;">
-                                        By <?php echo htmlspecialchars($item['writer_name']); ?>
-                                    </div>
-                                <?php endif; ?>
                                 <span class="cart-item-price">Rs. <?php echo number_format($item['price_used'], 2); ?></span>
                             </div>
                             

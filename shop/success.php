@@ -36,6 +36,7 @@ $itemsResult = $conn->query($items_query);
 
 $custom_page_title = "Order Placed Successfully! - Bookstore";
 $custom_page_description = "Your cash-on-delivery order has been successfully placed.";
+$meta_robots = 'noindex, nofollow';
 
 include_once __DIR__ . '/../includes/header.php';
 ?>

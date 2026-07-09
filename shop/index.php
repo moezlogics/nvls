@@ -8,6 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../lib/coming_soon.php';
+require_once __DIR__ . '/../lib/shop_seo.php';
 coming_soon_gate('shop');
 
 // Fetch active products
@@ -28,14 +29,27 @@ $query = "
 ";
 $productsResult = $conn->query($query);
 
+$shop_list_products = [];
+if ($productsResult) {
+    while ($row = $productsResult->fetch_assoc()) {
+        $shop_list_products[] = $row;
+    }
+}
+
 // Count unique items in cart for the floating badge
 $cart_count = 0;
 if (!empty($_SESSION['shop_cart'])) {
     $cart_count = array_sum($_SESSION['shop_cart']);
 }
 
-$custom_page_title = "Bookstore - Buy Novels Online";
-$custom_page_description = "Browse and buy premium printed copies of your favorite Urdu novels and books. Cash on delivery available across Pakistan.";
+$is_shop_index = true;
+$shop_index_seo = shop_seo_index_context($site_settings, $site_url, $search_term !== '');
+$canonical_url = $shop_index_seo['url'];
+if (!empty($shop_index_seo['is_search'])) {
+    $meta_robots = $shop_index_seo['robots'];
+}
+
+$body_class_extra = 'page-shop-index';
 
 include_once __DIR__ . '/../includes/header.php';
 ?>
@@ -44,17 +58,17 @@ include_once __DIR__ . '/../includes/header.php';
 
 <!-- Shop Hero Section -->
 <div class="shop-container">
-    <div style="background: linear-gradient(135deg, var(--shop-primary), var(--shop-secondary)); border-radius: var(--shop-radius); padding: 32px 24px; color: #fff; margin-bottom: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-        <h2 style="font-size:1.75rem; font-weight:800; margin:0 0 8px 0; font-family:var(--shop-font);">Novel Bookstore</h2>
-        <p style="font-size:0.92rem; opacity:0.9; margin:0; line-height:1.5;">Buy premium printed copies of your favorite novels directly to your doorstep. Cash on Delivery is available all over Pakistan!</p>
+    <div style="background: linear-gradient(135deg, var(--shop-primary), var(--shop-secondary)); border-radius: var(--shop-radius); padding: 24px 20px; color: #fff; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <h2 style="font-size:1.5rem; font-weight:800; margin:0 0 6px 0; font-family:var(--shop-font); letter-spacing:-0.02em;">Bookstore</h2>
+        <p style="font-size:0.88rem; opacity:0.9; margin:0; line-height:1.5;">Buy premium printed copies of your favorite novels directly to your doorstep. Cash on Delivery is available all over Pakistan!</p>
     </div>
 
     <!-- Search and Filters -->
-    <div style="margin-bottom: 24px; display:flex; gap:12px;">
-        <form action="" method="GET" style="display:flex; flex-grow:1; gap:8px; margin:0;">
-            <input type="text" name="search" class="shop-form-control" placeholder="Search books..." value="<?php echo htmlspecialchars($search_term); ?>" style="height:44px;">
-            <button type="submit" class="sp-details-btn-cart" style="max-width:100px; height:44px; margin:0; background:var(--shop-primary);">
-                <i class="fa-solid fa-magnifying-glass"></i> Search
+    <div style="margin-bottom: 20px; display:flex; gap:8px;">
+        <form action="" method="GET" style="display:flex; flex-grow:1; gap:6px; margin:0;">
+            <input type="text" name="search" class="shop-form-control" placeholder="Search books..." value="<?php echo htmlspecialchars($search_term); ?>" style="height:38px;">
+            <button type="submit" class="sp-submit" style="height:38px; font-size:0.85rem; border-radius:6px;">
+                <i class="fa-solid fa-magnifying-glass me-1"></i> Search
             </button>
         </form>
     </div>
@@ -63,9 +77,9 @@ include_once __DIR__ . '/../includes/header.php';
         <i class="fa-solid fa-book"></i> <?php echo !empty($search_term) ? 'Search Results' : 'Latest Arrivals'; ?>
     </h3>
 
-    <?php if ($productsResult && $productsResult->num_rows > 0): ?>
+    <?php if (!empty($shop_list_products)): ?>
         <div class="shop-grid">
-            <?php while ($p = $productsResult->fetch_assoc()): 
+            <?php foreach ($shop_list_products as $p): 
                 $original_price = (float)$p['price'];
                 $sale_price = $p['sale_price'] !== null ? (float)$p['sale_price'] : null;
                 $has_discount = ($sale_price !== null && $sale_price < $original_price);
@@ -94,12 +108,6 @@ include_once __DIR__ . '/../includes/header.php';
                         <a href="product.php?id=<?php echo $p['id']; ?>" class="shop-card-title">
                             <?php echo htmlspecialchars($p['title']); ?>
                         </a>
-                        
-                        <?php if (!empty($p['writer_name'])): ?>
-                            <span style="font-size:0.75rem; color:var(--shop-gray); margin-bottom:8px; display:block;">
-                                By <?php echo htmlspecialchars($p['writer_name']); ?>
-                            </span>
-                        <?php endif; ?>
 
                         <div class="shop-card-price-row">
                             <?php if ($has_discount): ?>
@@ -121,7 +129,7 @@ include_once __DIR__ . '/../includes/header.php';
                         <?php endif; ?>
                     </div>
                 </div>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         </div>
     <?php else: ?>
         <div class="shop-empty-state">

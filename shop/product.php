@@ -33,6 +33,12 @@ if (!$res || $res->num_rows == 0) {
 
 $p = $res->fetch_assoc();
 
+require_once __DIR__ . '/../lib/shop_seo.php';
+$shop_seo_ctx = shop_seo_product_context($p, $site_settings, $site_url);
+$is_shop_product = true;
+$canonical_url = $shop_seo_ctx['url'];
+$lcp_image_url = $p['image'] ?? '';
+
 $original_price = (float)$p['price'];
 $sale_price = $p['sale_price'] !== null ? (float)$p['sale_price'] : null;
 $has_discount = ($sale_price !== null && $sale_price < $original_price);
@@ -48,59 +54,81 @@ if ($has_discount) {
     $discount_pct = round((($original_price - $sale_price) / $original_price) * 100);
 }
 
+// Gallery images array
+$gallery = !empty($p['gallery_images']) ? explode(',', $p['gallery_images']) : [];
+
 // Count unique items in cart for the floating badge
 $cart_count = 0;
 if (!empty($_SESSION['shop_cart'])) {
     $cart_count = array_sum($_SESSION['shop_cart']);
 }
 
-$custom_page_title = $p['title'] . " - Buy Printed Novel Online";
-$custom_page_description = "Buy physical/printed book copy of " . $p['title'] . " written by " . ($p['writer_name'] ?? 'Author') . ". Delivery all over Pakistan.";
+// Body extra class to trigger Nginx mobile header hiding
+$body_class_extra = 'page-shop-product';
 
 include_once __DIR__ . '/../includes/header.php';
 ?>
 
 <link rel="stylesheet" href="shop.css">
 
+<!-- Minimal Mobile Header (displayed only on mobile when main header is hidden) -->
+<div class="sp-mobile-nav">
+    <a href="index.php" class="sp-mobile-nav-btn"><i class="fa-solid fa-arrow-left"></i></a>
+    <span class="sp-mobile-nav-title"><?php echo htmlspecialchars($p['title']); ?></span>
+    <a href="<?php echo htmlspecialchars($site_url); ?>/" class="sp-mobile-nav-btn"><i class="fa-solid fa-house"></i></a>
+</div>
+
 <div class="shop-container">
-    <div style="margin-bottom:16px;">
-        <a href="index.php" style="text-decoration:none; color:var(--shop-secondary); font-size:0.88rem; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+    <div style="margin-bottom:12px;" class="hidden lg:block">
+        <a href="index.php" style="text-decoration:none; color:var(--shop-gray); font-size:0.8rem; font-weight:700; display:inline-flex; align-items:center; gap:4px;">
             <i class="fa-solid fa-arrow-left"></i> Back to Shop
         </a>
     </div>
 
     <div class="sp-details-container">
+        <!-- Main Image and Gallery thumbnails -->
         <div class="sp-details-image-wrap">
-            <img src="<?php echo htmlspecialchars($img_url); ?>" class="sp-details-image" alt="<?php echo htmlspecialchars($p['title']); ?>">
+            <img src="<?php echo htmlspecialchars($img_url); ?>" id="mainProductImg" class="sp-details-image" alt="<?php echo htmlspecialchars($p['title']); ?>">
+            
+            <?php if (!empty($gallery) || !empty($p['image'])): ?>
+                <div class="sp-gallery-grid">
+                    <?php if (!empty($p['image'])): ?>
+                        <img src="<?php echo htmlspecialchars($img_url); ?>" class="sp-gallery-thumb active" onclick="changeProductImage(this.src, this)">
+                    <?php endif; ?>
+                    <?php foreach ($gallery as $g_img): 
+                        if (empty(trim($g_img))) continue;
+                        $g_url = '../' . ltrim($g_img, '/');
+                    ?>
+                        <img src="<?php echo htmlspecialchars($g_url); ?>" class="sp-gallery-thumb" onclick="changeProductImage(this.src, this)">
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </div>
         
         <div class="sp-details-info">
             <h2 class="sp-details-title"><?php echo htmlspecialchars($p['title']); ?></h2>
             
-            <?php if (!empty($p['writer_name'])): ?>
-                <div style="font-size:0.9rem; color:var(--shop-gray); margin-bottom:12px;">
-                    By <span style="font-weight:700; color:var(--shop-dark);"><?php echo htmlspecialchars($p['writer_name']); ?></span>
-                </div>
-            <?php endif; ?>
-
             <?php if ((int)$p['stock'] > 0): ?>
-                <span class="sp-details-stock-badge sp-details-stock-in"><i class="fa-solid fa-circle-check"></i> In Stock (<?php echo $p['stock']; ?> copies left)</span>
+                <span class="sp-details-stock-badge sp-details-stock-in">
+                    <i class="fa-solid fa-circle-check"></i> Only <?php echo $p['stock']; ?> left in stock
+                </span>
             <?php else: ?>
-                <span class="sp-details-stock-badge sp-details-stock-out"><i class="fa-solid fa-circle-xmark"></i> Out of Stock</span>
+                <span class="sp-details-stock-badge sp-details-stock-out">
+                    <i class="fa-solid fa-circle-xmark"></i> Out of Stock
+                </span>
             <?php endif; ?>
 
             <div class="sp-details-price-box">
                 <?php if ($has_discount): ?>
                     <span class="sp-details-price">Rs. <?php echo number_format($sale_price, 2); ?></span>
                     <span class="sp-details-old-price">Rs. <?php echo number_format($original_price, 2); ?></span>
-                    <span style="margin-left:auto; background:var(--shop-danger); color:#fff; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:4px;">-<?php echo $discount_pct; ?>% OFF</span>
+                    <span style="margin-left:auto; background:var(--shop-danger); color:#fff; font-size:0.7rem; font-weight:700; padding:2px 6px; border-radius:4px;">-<?php echo $discount_pct; ?>% OFF</span>
                 <?php else: ?>
                     <span class="sp-details-price">Rs. <?php echo number_format($original_price, 2); ?></span>
                 <?php endif; ?>
             </div>
 
             <div class="sp-details-description">
-                <h4 style="margin:0 0 8px 0; color:var(--shop-dark); font-weight:700;">Description</h4>
                 <p style="margin:0;"><?php echo nl2br(htmlspecialchars($p['description'] ?: 'No description available for this book.')); ?></p>
             </div>
 
@@ -124,6 +152,18 @@ include_once __DIR__ . '/../includes/header.php';
                     </a>
                 <?php endif; ?>
             </div>
+            
+            <!-- Video Story Player -->
+            <?php if (!empty($p['video_url'])): 
+                $video_src = '../' . ltrim($p['video_url'], '/');
+            ?>
+                <div style="border-top: 1px solid var(--shop-border); padding-top: 16px; margin-top: 16px;">
+                    <h4 style="margin: 0 0 10px 0; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--shop-gray);">Video Review / Trailer</h4>
+                    <div class="sp-video-container">
+                        <video class="sp-video-player" src="<?php echo htmlspecialchars($video_src); ?>" controls loop muted autoplay playsinline></video>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -149,6 +189,12 @@ function adjustQty(amount) {
     if (val < 1) val = 1;
     if (val > maxStock) val = maxStock;
     input.value = val;
+}
+
+function changeProductImage(src, thumbEl) {
+    document.getElementById('mainProductImg').src = src;
+    document.querySelectorAll('.sp-gallery-thumb').forEach(t => t.classList.remove('active'));
+    thumbEl.classList.add('active');
 }
 
 function showToast(message, isError = false) {

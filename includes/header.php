@@ -65,6 +65,16 @@ if (isset($is_homepage) && $is_homepage) {
         : ($site_settings['site_logo'] ?? '');
     $_datePublIso = !empty($row['created_at']) ? date('c', strtotime($row['created_at'])) : '';
     $_dateModIso  = !empty($row['updated_at']) ? date('c', strtotime($row['updated_at'])) : $_datePublIso;
+} elseif (!empty($is_shop_product) && !empty($shop_seo_ctx) && is_array($shop_seo_ctx)) {
+    $page_title = htmlspecialchars($shop_seo_ctx['title']);
+    $meta_desc = htmlspecialchars($shop_seo_ctx['description']);
+    $og_image = $shop_seo_ctx['primary_image'] ?? '';
+} elseif (!empty($is_shop_index) && !empty($shop_index_seo) && is_array($shop_index_seo)) {
+    $page_title = htmlspecialchars($shop_index_seo['title']);
+    $meta_desc = htmlspecialchars($shop_index_seo['description']);
+    $og_image = !empty($site_settings['homepage_featured_image'])
+        ? $site_settings['homepage_featured_image']
+        : ($site_settings['site_logo'] ?? '');
 } elseif (!empty($custom_meta_title)) {
     $page_title = htmlspecialchars($custom_meta_title);
     $meta_desc = htmlspecialchars($custom_meta_description ?? ($site_settings['seo_description'] ?? ''));
@@ -200,13 +210,31 @@ if (empty($_SESSION['admin_logged_in'])) {
     <meta property="og:title" content="<?php echo $page_title; ?>">
     <meta property="og:description" content="<?php echo $meta_desc; ?>">
     <meta property="og:url" content="<?php echo htmlspecialchars($canonical_url); ?>">
-    <meta property="og:type" content="<?php echo (isset($is_single_post) && $is_single_post) ? 'article' : 'website'; ?>">
+    <?php
+    $og_type = 'website';
+    if (!empty($is_single_post)) {
+        $og_type = 'article';
+    } elseif (!empty($is_shop_product)) {
+        $og_type = 'product';
+    }
+    ?>
+    <meta property="og:type" content="<?php echo $og_type; ?>">
     <?php if(!empty($og_image)): 
         $og_image_url = (strpos($og_image, 'http') === 0) 
             ? $og_image 
             : $site_url . '/' . ltrim(preg_replace('/^\.\.\//', '', $og_image), '/');
     ?>
     <meta property="og:image" content="<?php echo htmlspecialchars($og_image_url); ?>">
+    <meta property="og:image:alt" content="<?php echo $page_title; ?>">
+    <?php endif; ?>
+
+    <?php if (!empty($is_shop_product) && !empty($shop_seo_ctx)): ?>
+    <meta property="product:brand" content="<?php echo htmlspecialchars($shop_seo_ctx['brand']); ?>">
+    <meta property="product:availability" content="<?php echo ($shop_seo_ctx['stock'] ?? 0) > 0 ? 'in stock' : 'out of stock'; ?>">
+    <meta property="product:condition" content="new">
+    <meta property="product:price:amount" content="<?php echo number_format($shop_seo_ctx['price'], 2, '.', ''); ?>">
+    <meta property="product:price:currency" content="<?php echo htmlspecialchars($shop_seo_ctx['currency']); ?>">
+    <meta property="product:retailer_item_id" content="<?php echo htmlspecialchars($shop_seo_ctx['sku']); ?>">
     <?php endif; ?>
 
     <!-- Twitter Card SEO -->
@@ -514,6 +542,21 @@ if (empty($_SESSION['admin_logged_in'])) {
     </script>
 
     <?php endif; ?>
+
+    <?php if (!empty($is_shop_product) && !empty($shop_seo_ctx) && is_array($shop_seo_ctx)):
+        require_once dirname(__DIR__) . '/lib/shop_seo.php';
+        shop_seo_render_product_schema($shop_seo_ctx, $_su . '/#organization');
+        shop_seo_render_product_webpage_schema($shop_seo_ctx, $_su . '/#website');
+        shop_seo_render_breadcrumb_schema($_su, $shop_seo_ctx['url'], $shop_seo_ctx['product_name']);
+    endif; ?>
+
+    <?php if (!empty($is_shop_index) && empty($shop_index_seo['is_search'])):
+        require_once dirname(__DIR__) . '/lib/shop_seo.php';
+        shop_seo_render_store_schema($site_settings, $_su);
+        if (!empty($shop_list_products) && is_array($shop_list_products)) {
+            shop_seo_render_itemlist_schema($shop_list_products, $_su);
+        }
+    endif; ?>
 
 
 

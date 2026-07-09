@@ -15,37 +15,6 @@ config.php
 # Keep default avatar asset
 !/uploads/community/default_avatar.png
 
-# ── Caching & Performance ────────────────────────────────────────────
-# Ignore static HTML and PDF cached files
-/cache/*
-!/cache/.gitkeep
-/cache/pdf/*
-!/cache/pdf/.gitkeep
-
-# ── Dependencies ─────────────────────────────────────────────────────
-# Node packages
-node_modules/
-package-lock.json
-
-# Composer vendor packages (if Composer is integrated in the future)
-# vendor/
-
-# ── Temporary & Scratch Files ────────────────────────────────────────
-# Test scripts and scratchpads
-scratch/
-
-# ── IDE & System Metadata ────────────────────────────────────────────
-# macOS system files
-.DS_Store
-.AppleDouble
-.LSOverride
-Icon
-
-# Windows thumbnail database
-Thumbs.db
-ehthumbs.db
-desktop.ini
-
 # IDE config folders
 .vscode/
 .idea/
