@@ -154,6 +154,7 @@ function coming_soon_render(string $feature): void {
 
     $siteName = htmlspecialchars($site_settings['site_name'] ?? 'Portal', ENT_QUOTES, 'UTF-8');
     $primary = preg_match('/^#[0-9a-fA-F]{3,8}$/', $site_settings['theme_primary'] ?? '') ? $site_settings['theme_primary'] : '#249990';
+
     $logo = $site_settings['site_logo'] ?? '';
     $logoUrl = '';
     if ($logo) {
@@ -164,11 +165,10 @@ function coming_soon_render(string $feature): void {
 
     $isCommunity = $feature === 'community';
     $title = $isCommunity ? 'Community' : 'Shop';
-    $headline = $isCommunity ? 'Community is coming soon' : 'Shop is opening soon';
+    $headline = 'Coming Soon';
     $subtitle = $isCommunity
-        ? 'We are building a space to share novels, quotes, and stories. Check back shortly.'
-        : 'Printed books and exclusive titles will be available here very soon.';
-    $icon = $isCommunity ? 'fa-users' : 'fa-bag-shopping';
+        ? 'A place to share and connect with readers. Launching shortly.'
+        : 'Printed books and more. Launching shortly.';
     $homeUrl = rtrim($site_url, '/') . '/';
     $cssUrl = rtrim($site_url, '/') . '/css/coming_soon.css';
 
